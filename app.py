@@ -1,29 +1,13 @@
-import gradio as gr
-import google.generativeai as genai
+from flask import Flask, render_template
+from routes.routes import routes_bp
 
-# Option 1: Set the API key through environment variable
-# Make sure to set GOOGLE_API_KEY as an environment variable on your system
-# Or Option 2: Explicitly set the API key in the code
-genai.configure(api_key="AIzaSyA9L8nQC2fwFUl_G-EyGMB1yhASbRIXP2Q")  # Replace with your actual API key
+app = Flask(__name__)
 
-# Initialize the generative model
-model = genai.GenerativeModel("gemini-1.5-flash")
+app.register_blueprint(routes_bp)
 
-# Define the function that will process the prompt and generate the response
-def generate_response(prompt):
-    # Generate response from the model
-    response = model.generate_content([prompt])
-    
-    # Return the response text
-    return response.text
+@app.route("/")
+def index():
+    return render_template("index.html")
 
-# Create the Gradio interface (only with a Textbox input)
-iface = gr.Interface(
-    fn=generate_response, 
-    inputs=gr.Textbox(label="Enter your prompt"),
-    outputs=gr.Textbox(label="Generated Response"),
-    live=True,
-)
-
-# Launch the Gradio app with the API enabled
-iface.launch(share=True)
+if __name__ == "__main__":
+    app.run(debug=True)
