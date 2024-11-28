@@ -1,0 +1,6 @@
+Flask==2.2.2  # Core Flask framework
+google-generativeai==0.1.0  # For GenAI API integration
+gunicorn==20.1.0  # For production deployment (optional, if needed)
+simplejson==3.18.4
+Flask-Session==0.4.0
+Flask-SQLAlchemy==2.5.1
